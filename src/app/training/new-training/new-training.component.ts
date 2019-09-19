@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
 import { NgForm } from '@angular/forms';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument, DocumentChangeAction } from 'angularfire2/firestore';
 import { Observable } from 'rxjs'
 import 'rxjs/Rx';
 
@@ -24,7 +24,8 @@ export class NewTrainingComponent implements OnInit {
     this.exercises = this.db
       .collection('availableExercises')
       .snapshotChanges()
-      .map(docArray => {
+      //.map(docArray => {
+      .map((docArray: DocumentChangeAction<Exercise>[]) => {
         return docArray.map(doc => {
           return {
             id: doc.payload.doc.id,
@@ -34,7 +35,6 @@ export class NewTrainingComponent implements OnInit {
           };
         });
       });
-
   }
 
   onStartTraining(form: NgForm) {
