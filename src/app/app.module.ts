@@ -4,8 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { SingupComponent } from './auth/singup/singup.component';
-import { LoginComponent } from './auth/login/login.component';
 import { TrainingComponent } from './training/training.component';
 import { CurrentTrainingComponent } from './training/current-training/current-training.component';
 import { NewTrainingComponent } from './training/new-training/new-training.component';
@@ -19,15 +17,18 @@ import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { environment } from '../environments/environment'
+
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { UIService } from './shared/ui.service';
+import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './app.reducer';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SingupComponent,
-    LoginComponent,
+    AppComponent,    
     TrainingComponent,
     CurrentTrainingComponent,
     NewTrainingComponent,
@@ -42,14 +43,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    BrowserAnimationsModule,
-    FormsModule,
+    BrowserAnimationsModule,    
     FlexLayoutModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,    
+    AuthModule,
+    StoreModule.forRoot(reducers)
   ],
-  providers: [AuthService, TrainingService],
+  providers: [AuthService, TrainingService, UIService],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
 })

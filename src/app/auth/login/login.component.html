@@ -24,8 +24,8 @@
                 <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
                 <mat-error>Has to be 6 caracters long</mat-error>
             </mat-form-field> 
-            <button mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
-
+            <button *ngIf="!(isLoading$ | async)" type ="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+            <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
         </form>
         
 </section>

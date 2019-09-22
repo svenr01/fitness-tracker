@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-singup',
@@ -9,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class SingupComponent implements OnInit {
   maxDate;
+  private loadingSubs: Subscription;
 
   constructor(private authService: AuthService) { }
 
@@ -23,4 +25,10 @@ export class SingupComponent implements OnInit {
       password: form.value.password
     })
   }
+  ngOnDestroy() {
+    if (this.loadingSubs) {
+      this.loadingSubs.unsubscribe();
+    }
+  }
+ 
 }
